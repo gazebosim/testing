@@ -1,4 +1,4 @@
-name: PR Collection Labeler
+name: PR Collection Labeler test rename
 
 on: pull_request_target
 
