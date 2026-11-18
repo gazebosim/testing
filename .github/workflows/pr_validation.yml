@@ -1,0 +1,28 @@
+# Test bed for gazebo-tooling/pr-data-action#3 (see gazebosim/gz-transport#784)
+name: PR Metadata Validation
+on:
+  pull_request:
+    branches: [jrivero/pr-data-action-base]
+    types: [opened, synchronize, reopened, labeled, unlabeled]
+
+permissions:
+  contents: read
+  pull-requests: read
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  changelog:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Validate changelog entries
+        id: changelog
+        uses: gazebo-tooling/pr-data-action@2d186e27c038683d94fd2130f920e75b3a961b2e
+        with:
+          changelog-dir: '.changelog'
+          skip-label: 'no-changelog'
+      - name: Show action outputs
+        if: always()
+        run: echo "found=${{ steps.changelog.outputs.changelog-found }} valid=${{ steps.changelog.outputs.changelog-valid }}"
