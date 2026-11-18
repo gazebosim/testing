@@ -1,1 +1,1 @@
-Fork entry without a type
+fix: fork entry with a valid header
